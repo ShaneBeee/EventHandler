@@ -1,10 +1,13 @@
 package tk.shanebee.eventSupport.events;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
@@ -127,14 +130,38 @@ public class PlayerEvents implements Listener {
 
     // Stops players from dropping items when in creative mode
     @EventHandler
-    public void onCreativeInvDrop(InventoryCreativeEvent e) {
-        Player p = ((Player) e.getWhoClicked());
+    public void onCreativeInvDrop(PlayerDropItemEvent e) {
+        Player p = e.getPlayer();
         if(config().getBoolean("Player Events.Creative Inventory Drop.Cancel")) {
-            if(!p.hasPermission("eventhandler.bypass.creativeinvdrop")) {
+            if(!p.hasPermission("eventhandler.bypass.creativeinvdrop") && !p.getGameMode().equals(GameMode.SURVIVAL)) {
                 e.setCancelled(true);
                 if(config().getBoolean("Player Events.Creative Inventory Drop.Message.Enabled")) {
                     String msg = config().getString("Player Events.Creative Inventory Drop.Message.Message");
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                }
+            }
+        }
+    }
+
+    // Stops players from trampling turtle eggs
+    @EventHandler
+    public void onPlayerTrample(PlayerInteractEvent e) {
+        if(e.getAction().equals(Action.PHYSICAL)) {
+            Player p = e.getPlayer();
+            Material block = e.getClickedBlock().getType();
+            if(block.equals(Material.TURTLE_EGG)) {
+                if (config().getBoolean("Player Events.Trample Turtle Eggs.Cancel")) {
+                    if(!p.hasPermission("eventhandler.bypass.trampleeggs")) {
+                        e.setCancelled(true);
+                        if (config().getBoolean("Player Events.Trample Turtle Eggs.Message.Enabled")) {
+                            String msg = config().getString("Player Events.Trample Turtle Eggs.Message.Message");
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                        }}}
+            } else if(block.equals(Material.FARMLAND)) {
+                if(config().getBoolean("Player Events.Trample Crops.Cancel")) {
+                    if(!p.hasPermission("eventhandler.bypass.tramplecrops")) {
+                        e.setCancelled(true);
+                    }
                 }
             }
         }

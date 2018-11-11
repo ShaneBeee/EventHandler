@@ -1,8 +1,10 @@
 package tk.shanebee.eventSupport.events;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.PigZapEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 import tk.shanebee.eventSupport.EventSupport;
@@ -34,4 +36,15 @@ public class EntityEvents implements Listener {
             e.setCancelled(true);
         }
     }
+
+    // Stops entities from trampling turtle eggs
+    @EventHandler
+    public void onTurtleEggTrample(EntityInteractEvent e) {
+        if (e.getBlock().getType().equals(Material.TURTLE_EGG)) {
+            if (config().getBoolean("Entity Events.Trample Turtle Eggs.Cancel")) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
 }
