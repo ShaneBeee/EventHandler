@@ -1,0 +1,64 @@
+main: tk.shanebee.eventSupport.EventSupport
+name: EventHandler
+version: 1.0.0
+api-version: 1.13
+author: ShaneBee
+website: https://ShaneBee.tk
+description: Handles server events, allowing server admins to cancel events
+
+commands:
+  eventhandler:
+    description: <reload> and <about>
+    permission: eventhandler.admin
+    aliases: eh
+    usage: /eventhandler <reload/about>
+
+permissions:
+  eventhandler.admin:
+    description: Allows admins to reload config
+    default: op
+  eventhandler.bypass:
+    description: Bypasses all cancelled events
+    default: op
+    children:
+      eventhandler.bypass.throwneggspawnchicken: true
+      eventhandler.bypass.enterbedevent: true
+      eventhandler.bypass.bucketfill: true
+      eventhandler.bypass.bucketempty: true
+      eventhandler.bypass.dropitem: true
+      eventhandler.bypass.tabcomplete: true
+      eventhandler.bypass.breed: true
+      eventhandler.bypass.tame: true
+      eventhandler.bypass.creativeinvdrop: true
+      eventhandler.bypass.jump: true
+
+  eventhandler.bypass.throwneggspawnchicken:
+    description: Bypasses the thrown egg spawn chicken event
+    default: op
+  eventhandler.bypass.enterbedevent:
+    description: Bypasses the enter bed event
+    default: op
+  eventhandler.bypass.bucketfill:
+    description: Bypasses the bucket fill event
+    default: op
+  eventhandler.bypass.bucketempty:
+    description: Bypasses the bucket empty event
+    default: op
+  eventhandler.bypass.dropitem:
+    description: Bypasses the item drop event
+    default: op
+  eventhandler.bypass.tabcomplete:
+    description: Bypasses the tab complete event
+    default: op
+  eventhandler.bypass.breed:
+    description: Bypasses the breed event
+    default: op
+  eventhandler.bypass.tame:
+    description: Bypasses the tame event
+    default: op
+  eventhandler.bypass.creativeinvdrop:
+    description: Bypasses the creative inv drop event
+    default: op
+  eventhandler.bypass.jump:
+    description: Bypasses the jump event
+    default: op
