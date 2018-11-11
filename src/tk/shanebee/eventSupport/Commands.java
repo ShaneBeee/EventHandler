@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 public class Commands implements CommandExecutor {
@@ -12,6 +13,10 @@ public class Commands implements CommandExecutor {
 
     Commands(EventSupport instance) {
         plugin = instance;
+    }
+
+    private FileConfiguration config() {
+        return plugin.getConfig();
     }
 
     @Override
@@ -23,10 +28,11 @@ public class Commands implements CommandExecutor {
                     plugin.reloadConfig();
                     Configuration.loadConfig(plugin.getConfig());
                     plugin.saveConfig();
-                    sender.sendMessage(ChatColor.GREEN + "Config reloaded successfully!");
+                    String pre = config().getString("Options.Prefix");
+                    sender.sendMessage(ChatColor.AQUA + pre + ChatColor.GREEN + " Config reloaded successfully!");
                 } else if (args[0].equalsIgnoreCase("about")) {
-
                     PluginDescriptionFile desc = plugin.getDescription();
+                    sender.sendMessage("");
                     sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "About EventHandler");
                     sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.AQUA + desc.getVersion());
                     sender.sendMessage(ChatColor.GOLD + "Author: " + ChatColor.AQUA + desc.getAuthors());
