@@ -49,6 +49,10 @@ public class EventSupport extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(PluginNameAndVersion);
     }
 
+    /**
+     * Checks if this server is running an instance of Paper or not
+     * @return True if server is running Paper
+     */
     public static boolean isRunningPaper() {
         try {
             Class.forName("co.aikar.timings.Timing");

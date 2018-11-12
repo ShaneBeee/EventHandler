@@ -6,7 +6,10 @@ import org.bukkit.plugin.PluginDescriptionFile;
 public class Configuration {
 
 
-
+    /**
+     * Sets the defaults for the plugin's config file
+     * @param config The plugins config file
+     */
     public static void loadConfig(FileConfiguration config) {
 
         PluginDescriptionFile pdfFile = EventSupport.getPlugin(EventSupport.class).getDescription();
@@ -15,6 +18,12 @@ public class Configuration {
         config.addDefault("Options.Prefix", "[EventHandler]");
 
         // ENTITY EVENTS
+        // Enter boat event
+        config.addDefault("Entity Events.Enter Boat.Cancel", false);
+
+        // Enter minecart event
+        config.addDefault("Entity Events.Enter Minecart.Cancel", false);
+
         // Pig zap event
         config.addDefault("Entity Events.Pig Zap.Cancel", false);
 
