@@ -1,5 +1,6 @@
 package tk.shanebee.eventSupport.events;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -9,9 +10,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityBreedEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityTameEvent;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import tk.shanebee.eventSupport.EventSupport;
 
 
@@ -163,6 +169,100 @@ public class PlayerEvents implements Listener {
                         e.setCancelled(true);
                     }
                 }
+            }
+        }
+    }
+
+    // Stops players from throwing eggs
+    @EventHandler
+    public void onPlayerThrowEgg(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        Material hand = p.getInventory().getItemInMainHand().getType();
+        Material offHand = p.getInventory().getItemInOffHand().getType();
+        if(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if(hand.equals(Material.EGG) || offHand.equals(Material.EGG)) {
+                if (config().getBoolean("Player Events.Throw Egg.Cancel")) {
+                    if (!p.hasPermission("eventhandler.bypass.throwegg")) {
+                        e.setCancelled(true);
+                        if(config().getBoolean("Player Events.Throw Egg.Message.Enabled")) {
+                            String msg = config().getString("Player Events.Throw Egg.Message.Message");
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                        }
+                    }
+                }
+                // Stops players from throwing snowballs
+            } else if(hand.equals(Material.SNOWBALL) || offHand.equals(Material.SNOWBALL)) {
+                if(config().getBoolean("Player Events.Throw Snowball.Cancel")) {
+                    if(!p.hasPermission("eventhandler.bypass.throwsnowball")) {
+                        e.setCancelled(true);
+                        if(config().getBoolean("Player Events.Throw Snowball.Message.Enabled")) {
+                            String msg = config().getString("Player Events.Throw Snowball.Message.Message");
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Stops players from fishing
+    @EventHandler
+    public void onPlayerFishing(PlayerFishEvent e) {
+        Player p = e.getPlayer();
+        if(config().getBoolean("Player Events.Fishing.Cancel")) {
+            if(!p.hasPermission("eventhandler.bypass.fishing")) {
+                e.setCancelled(true);
+                if(config().getBoolean("Player Events.Fishing.Message.Enabled")) {
+                    String msg = config().getString("Player Events.Fishing.Message.Message");
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                }
+            }
+        }
+    }
+
+    // Stops players from consuming potions
+    @EventHandler
+    public void onPlayerConsumePotion(PlayerItemConsumeEvent e) {
+        Player p = e.getPlayer();
+        if(e.getItem().getType().equals(Material.POTION)) {
+            if(config().getBoolean("Player Events.Consume Potion.Cancel")) {
+                if(!p.hasPermission("eventhandler.bypass.consumepotion")) {
+                    e.setCancelled(true);
+                    if(config().getBoolean("Player Events.Consume Potion.Message.Enabled")) {
+                        String msg = config().getString("Player Events.Consume Potion.Message.Message");
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                    }
+                }
+            }
+    // Stops players from consuming milk
+        } else if(e.getItem().getType().equals(Material.MILK_BUCKET)) {
+            if(config().getBoolean("Player Events.Consume Milk.Cancel")) {
+                if(!p.hasPermission("eventhandler.bypass.consumemilk")) {
+                    e.setCancelled(true);
+                    if(config().getBoolean("Player Events.Consume Milk.Message.Enabled")) {
+                        String msg = config().getString("Player Events.Consume Milk.Message.Message");
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                    }
+                }
+            }
+        }
+    }
+
+    // Stops players from sprinting
+    @EventHandler
+    public void onPlayerSprint(PlayerToggleSprintEvent e) {
+        Player p = e.getPlayer();
+        if (config().getBoolean("Player Events.Toggle Sprint.Cancel")) {
+            if (!p.hasPermission("eventhandler.bypass.togglesprint")) {
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+                    public void run() {
+                        if(config().getBoolean("Player Events.Toggle Sprint.Message.Enabled") && p.isSprinting()) {
+                            String msg = config().getString("Player Events.Toggle Sprint.Message.Message");
+                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                        }
+                        p.setSprinting(false);
+                    }
+                }, 5L);
             }
         }
     }
