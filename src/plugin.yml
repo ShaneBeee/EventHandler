@@ -24,13 +24,18 @@ permissions:
       eventhandler.bypass.breed: true
       eventhandler.bypass.bucketfill: true
       eventhandler.bypass.bucketempty: true
+      eventhandler.bypass.consumepotion: true
       eventhandler.bypass.creativeinvdrop: true
       eventhandler.bypass.dropitem: true
       eventhandler.bypass.enterbedevent: true
+      eventhandler.bypass.fishing: true
       eventhandler.bypass.jump: true
       eventhandler.bypass.tabcomplete: true
       eventhandler.bypass.tame: true
       eventhandler.bypass.throwneggspawnchicken: true
+      eventhandler.bypass.throwegg: true
+      eventhandler.bypass.throwsnowball: true
+      eventhandler.bypass.togglesprint: true
       eventhandler.bypass.tramplecrops: true
       eventhandler.bypass.trampleeggs: true
 
@@ -43,6 +48,9 @@ permissions:
   eventhandler.bypass.bucketempty:
     description: Bypasses the bucket empty event
     default: op
+  eventhandler.bypass.consumepotion:
+    description: Bypasses the consume potion event
+    default: op
   eventhandler.bypass.creativeinvdrop:
     description: Bypasses the creative inv drop event
     default: op
@@ -51,6 +59,9 @@ permissions:
     default: op
   eventhandler.bypass.enterbedevent:
     description: Bypasses the enter bed event
+    default: op
+  eventhandler.bypass.fishing:
+    description: Bypasses the fishing event
     default: op
   eventhandler.bypass.jump:
     description: Bypasses the jump event
@@ -63,6 +74,15 @@ permissions:
     default: op
   eventhandler.bypass.throwneggspawnchicken:
     description: Bypasses the thrown egg spawn chicken event
+    default: op
+  eventhandler.bypass.throwegg:
+    description: Bypasses the throwing egg event
+    default: op
+  eventhandler.bypass.throwsnowball:
+    description: Bypasses the throwing snowball event
+    default: op
+  eventhandler.bypass.togglesprint:
+    description: Bypasses the toggle sprint event
     default: op
   eventhandler.bypass.tramplecrops:
     description: Bypasses the crop trample event

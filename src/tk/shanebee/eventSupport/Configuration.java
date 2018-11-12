@@ -1,10 +1,16 @@
 package tk.shanebee.eventSupport;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 public class Configuration {
 
+
+
     public static void loadConfig(FileConfiguration config) {
+
+        PluginDescriptionFile pdfFile = EventSupport.getPlugin(EventSupport.class).getDescription();
+        String ver = pdfFile.getVersion();
 
         config.addDefault("Options.Prefix", "[EventHandler]");
 
@@ -17,7 +23,6 @@ public class Configuration {
 
         // Entity trample Turtle egg event
         config.addDefault("Entity Events.Trample Turtle Eggs.Cancel", false);
-        config.addDefault("Entity Events.Trample Turtle Eggs.NOTES", "Coming soon, the event is not working right now");
 
         // BLOCK EVENTS
         // Block form event
@@ -63,6 +68,18 @@ public class Configuration {
         config.addDefault("Player Events.Bucket Empty.Message.Enabled", false);
         config.addDefault("Player Events.Bucket Empty.Message.Message", "&cEmptying buckets has been disabled on this server");
 
+        // Consume potion event
+        config.addDefault("Player Events.Consume Potion.Cancel", false);
+        config.addDefault("Player Events.Consume Potion.ByPass Perm", "eventhandler.bypass.consumepotion");
+        config.addDefault("Player Events.Consume Potion.Message.Enabled", false);
+        config.addDefault("Player Events.Consume Potion.Message.Message", "&cConsumption of potions on this has been disabled");
+
+        // Consume milk event
+        config.addDefault("Player Events.Consume Milk.Cancel", false);
+        config.addDefault("Player Events.Consume Milk.ByPass Perm", "eventhandler.bypass.consumemilk");
+        config.addDefault("Player Events.Consume Milk.Message.Enabled", false);
+        config.addDefault("Player Events.Consume Milk.Message.Message", "&cConsumption of milk on this has been disabled");
+
         // Creative Inventory Drop
         config.addDefault("Player Events.Creative Inventory Drop.Cancel", false);
         config.addDefault("Player Events.Creative Inventory Drop.ByPass Perm", "eventhandler.bypass.creativeinvdrop");
@@ -81,11 +98,41 @@ public class Configuration {
         config.addDefault("Player Events.Enter Bed Event.Message.Enabled", false);
         config.addDefault("Player Events.Enter Bed Event.Message.Message", "&cEntering a bed has been cancelled on this server");
 
+        // Fishing event
+        config.addDefault("Player Events.Fishing.Cancel", false);
+        config.addDefault("Player Events.Fishing.ByPass Perm", "eventhandler.bypass.fishing");
+        config.addDefault("Player Events.Fishing.Message.Enabled", false);
+        config.addDefault("Player Events.Fishing.Message.Message", "&cFishing has been disabled on this server");
+
         // Tame event
         config.addDefault("Player Events.Tame.Cancel", false);
         config.addDefault("Player Events.Tame.ByPass Perm", "eventhandler.bypass.tame");
         config.addDefault("Player Events.Tame.Message.Enabled", false);
         config.addDefault("Player Events.Tame.Message.Message", "&cTaming has been disabled on this server");
+
+        // Throw egg event
+        config.addDefault("Player Events.Throw Egg.Cancel", false);
+        config.addDefault("Player Events.Throw Egg.ByPass Perm", "eventhandler.bypass.throwegg");
+        config.addDefault("Player Events.Throw Egg.Message.Enabled", false);
+        config.addDefault("Player Events.Throw Egg.Message.Message", "&cThrowing eggs has been disabled on this server");
+
+        // Throw snowball event
+        config.addDefault("Player Events.Throw Snowball.Cancel", false);
+        config.addDefault("Player Events.Throw Snowball.ByPass Perm", "eventhandler.bypass.throwsnowball");
+        config.addDefault("Player Events.Throw Snowball.Message.Enabled", false);
+        config.addDefault("Player Events.Throw Snowball.Message.Message", "&cThrowing snowballs has been disabled on this server");
+
+        // Thrown egg spawn chicken event
+        config.addDefault("Player Events.Thrown Egg Spawn Chicken.Cancel", false);
+        config.addDefault("Player Events.Thrown Egg Spawn Chicken.ByPass Perm", "eventhandler.bypass.throwneggspawnchicken");
+        config.addDefault("Player Events.Thrown Egg Spawn Chicken.Message.Enabled", false);
+        config.addDefault("Player Events.Thrown Egg Spawn Chicken.Message.Message", "&cEgg hatching has been disabled on this server");
+
+        // Toggle sprint
+        config.addDefault("Player Events.Toggle Sprint.Cancel", false);
+        config.addDefault("Player Events.Toggle Sprint.ByPass Perm", "eventhandler.bypass.togglesprint");
+        config.addDefault("Player Events.Toggle Sprint.Message.Enabled", false);
+        config.addDefault("Player Events.Toggle Sprint.Message.Message", "&cSprinting has been disabled on this server");
 
         // Trample crops
         config.addDefault("Player Events.Trample Crops.Cancel", false);
@@ -98,13 +145,6 @@ public class Configuration {
         config.addDefault("Player Events.Trample Turtle Eggs.ByPass Perm", "eventhandler.bypass.trampleeggs");
         config.addDefault("Player Events.Trample Turtle Eggs.Message.Enabled", false);
         config.addDefault("Player Events.Trample Turtle Eggs.Message.Message", "&cTrampling turtle eggs has been disabled on this server");
-
-
-        // Thrown egg spawn chicken event
-        config.addDefault("Player Events.Thrown Egg Spawn Chicken.Cancel", false);
-        config.addDefault("Player Events.Thrown Egg Spawn Chicken.ByPass Perm", "eventhandler.bypass.throwneggspawnchicken");
-        config.addDefault("Player Events.Thrown Egg Spawn Chicken.Message.Enabled", false);
-        config.addDefault("Player Events.Thrown Egg Spawn Chicken.Message.Message", "&cEgg hatching has been disabled on this server");
 
         // PAPER EVENTS
         if(EventSupport.isRunningPaper()) {
@@ -129,11 +169,17 @@ public class Configuration {
         }
 
 
+
+
         config.options().copyDefaults(true);
         config.options().header("Event Handler" + "\n" +
-                "You can pick which events you want to cancel" + "\n" +
-                "You can also add/enable messages to be sent to the player when the event is cancelled" + "\n\n" +
-                "The permission nodes are just here for reference, changing them will have no effect"+ "\n");
+                "Version: " + ver + "\n\n" +
+                "You can pick which events you want to cancel [Just set Cancel: true]" + "\n" +
+                "You can also add/enable messages to be sent to the player when the event is cancelled" + "\n" +
+                "[MESSAGES ONLY AVAILABLE FOR PLAYER EVENTS + Support color codes]" + "\n" +
+                "More info regarding these events can be found on the Spigot resource page:" + "\n" +
+                "https://www.spigotmc.org/resources/eventhandler.62329/" + "\n\n" +
+                "The permission nodes are just here for reference, changing them will have no affect"+ "\n");
     }
 
 }
