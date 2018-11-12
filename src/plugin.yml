@@ -17,7 +17,7 @@ permissions:
   eventhandler.admin:
     description: Allows admins to reload config
     default: op
-  eventhandler.bypass:
+  eventhandler.bypass.*:
     description: Bypasses all cancelled events
     default: op
     children:
