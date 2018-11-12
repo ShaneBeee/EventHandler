@@ -5,7 +5,7 @@
 ![GitHub issues](https://img.shields.io/github/issues-raw/ShaneBeee/EventHandler.svg?style=for-the-badge)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/ShaneBeee/EventHandler.svg?style=for-the-badge)
 ![GitHub All Releases](https://img.shields.io/github/downloads/ShaneBeee/EventHandler/total.svg?style=for-the-badge)
-[![Discord](https://img.shields.io/discord/425192525091831808.svg)](https://discordapp.com/invite/km3UF8Q?style=for-the-badge)
+[![Discord](https://img.shields.io/discord/425192525091831808.svg?style=for-the-badge)](https://discordapp.com/invite/km3UF8Q)
 
 
       
