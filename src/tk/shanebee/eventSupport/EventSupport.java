@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import tk.shanebee.eventSupport.events.*;
+import tk.shanebee.eventSupport.metrics.Metrics;
 
 public class EventSupport extends JavaPlugin {
     private FileConfiguration config = this.getConfig();
@@ -12,6 +13,8 @@ public class EventSupport extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Metrics metrics = new Metrics(this);
+
         PluginDescriptionFile pdfFile = getDescription();
         String prefix = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + pdfFile.getName() +
                 ChatColor.DARK_GRAY + "]";
@@ -22,7 +25,6 @@ public class EventSupport extends JavaPlugin {
         if(!isRunningPaper()) {
             getServer().getConsoleSender().sendMessage(prefix + ChatColor.LIGHT_PURPLE + " If you run Paper, more events will be available");
         }
-
 
         Configuration.loadConfig(config);
         saveConfig();
