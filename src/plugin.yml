@@ -1,6 +1,6 @@
 main: tk.shanebee.eventSupport.EventSupport
 name: EventHandler
-version: 1.1.0
+version: 1.2.0
 api-version: 1.13
 author: ShaneBee
 website: https://ShaneBee.tk
@@ -11,11 +11,11 @@ commands:
     description: <reload> and <about>
     permission: eventhandler.admin
     aliases: eh
-    usage: /eventhandler <reload/about>
+    usage: /eventhandler <about/enable/disable/list/reload>
 
 permissions:
   eventhandler.admin:
-    description: Allows admins to reload config
+    description: Allows admins to reload config and use list command as well as enable/disable events via command
     default: op
   eventhandler.bypass.*:
     description: Bypasses all cancelled events
@@ -25,6 +25,7 @@ permissions:
       eventhandler.bypass.bucketfill: true
       eventhandler.bypass.bucketempty: true
       eventhandler.bypass.consumepotion: true
+      eventhandler.bypass.consumemilk: true
       eventhandler.bypass.creativeinvdrop: true
       eventhandler.bypass.dropitem: true
       eventhandler.bypass.enterbedevent: true
@@ -50,6 +51,9 @@ permissions:
     default: op
   eventhandler.bypass.consumepotion:
     description: Bypasses the consume potion event
+    default: op
+  eventhandler.bypass.consumemilk:
+    description: Bypasses the consume milk event
     default: op
   eventhandler.bypass.creativeinvdrop:
     description: Bypasses the creative inv drop event

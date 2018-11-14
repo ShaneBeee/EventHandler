@@ -37,7 +37,7 @@ public class EventSupport extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new PaperEvents(this), this);
         }
         this.getCommand("eventhandler").setExecutor(new Commands(this));
-        this.getCommand("eventhandler").setTabCompleter(new TabCompleter());
+        this.getCommand("eventhandler").setTabCompleter(new TabCompleter(this));
     }
 
     @Override

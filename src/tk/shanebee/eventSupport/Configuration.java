@@ -1,5 +1,6 @@
 package tk.shanebee.eventSupport;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 
@@ -156,6 +157,7 @@ public class Configuration {
         config.addDefault("Player Events.Trample Turtle Eggs.Message.Message", "&cTrampling turtle eggs has been disabled on this server");
 
         // PAPER EVENTS
+        String paper;
         if(EventSupport.isRunningPaper()) {
 
             // Jump event
@@ -175,20 +177,28 @@ public class Configuration {
 
             // Witch throw potion event
             config.addDefault("Entity Events.Witch Throw Potion.Cancel", false);
+
+            paper = "Running Paper: True";
+        }
+        else {
+            paper = "Running Paper: False" +
+                    "\nIf you run Paper, you will gain a few more events you can cancel" +
+                    "\nIf you wish to consider running Paper, check out their website for more info" +
+                    "\nhttps://papermc.io";
         }
 
-
-
+        String[] mcVer = Bukkit.getBukkitVersion().split("-");
 
         config.options().copyDefaults(true);
         config.options().header("Event Handler" + "\n" +
-                "Version: " + ver + "\n\n" +
+                "Version: " + ver + "\n" +
+                "MC Version: " + mcVer[0] + "\n" + paper + "\n\n" +
                 "You can pick which events you want to cancel [Just set Cancel: true]" + "\n" +
                 "You can also add/enable messages to be sent to the player when the event is cancelled" + "\n" +
                 "[MESSAGES ONLY AVAILABLE FOR PLAYER EVENTS + Support color codes]" + "\n" +
                 "More info regarding these events can be found on the Spigot resource page:" + "\n" +
                 "https://www.spigotmc.org/resources/eventhandler.62329/" + "\n\n" +
-                "The permission nodes are just here for reference, changing them will have no affect"+ "\n");
+                "The permission nodes are just here for reference, changing them will have no affect");
     }
 
 }
