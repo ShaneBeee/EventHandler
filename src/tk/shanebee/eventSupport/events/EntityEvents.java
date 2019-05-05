@@ -1,11 +1,14 @@
 package tk.shanebee.eventSupport.events;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.PigZapEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
@@ -41,6 +44,23 @@ public class EntityEvents implements Listener {
     public void onTurtleEggTrample(EntityInteractEvent e) {
         if (e.getBlock().getType().equals(Material.TURTLE_EGG)) {
             if (config().getBoolean("Entity Events.Trample Turtle Eggs.Cancel")) e.setCancelled(true);
+        }
+    }
+
+    // Stops villagers from breaking/planting crops
+    @EventHandler
+    public void onVillagerBreak(EntityChangeBlockEvent e) {
+        if (e.getEntityType() == EntityType.VILLAGER) {
+            if (e.getBlock().getType() == Material.AIR && e.getBlock().getRelative(BlockFace.DOWN).getType() == Material.FARMLAND) {
+                if (config().getBoolean("Entity Events.Villager Planting Crops.Cancel")) e.setCancelled(true);
+            }
+            switch (e.getBlock().getType()) {
+                case WHEAT:
+                case POTATOES:
+                case CARROTS:
+                case BEETROOTS:
+                    if (config().getBoolean("Entity Events.Villager Breaking Crops.Cancel")) e.setCancelled(true);
+            }
         }
     }
 

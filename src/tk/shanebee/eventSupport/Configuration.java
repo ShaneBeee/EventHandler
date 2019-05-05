@@ -34,6 +34,12 @@ public class Configuration {
         // Entity trample Turtle egg event
         config.addDefault("Entity Events.Trample Turtle Eggs.Cancel", false);
 
+        // Villager breaking crops event
+        config.addDefault("Entity Events.Villager Breaking Crops.Cancel", false);
+
+        // Villager planting crops event
+        config.addDefault("Entity Events.Villager Planting Crops.Cancel", false);
+
         // BLOCK EVENTS
         // Block form event
         config.addDefault("Block Events.Block Form.Cancel", false);
