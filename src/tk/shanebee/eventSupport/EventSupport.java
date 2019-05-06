@@ -1,6 +1,7 @@
 package tk.shanebee.eventSupport;
 
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,8 +17,8 @@ public class EventSupport extends JavaPlugin {
         Metrics metrics = new Metrics(this);
 
         PluginDescriptionFile pdfFile = getDescription();
-        String prefix = ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + pdfFile.getName() +
-                ChatColor.DARK_GRAY + "]";
+        String prefix = ChatColor.GRAY + "[" + ChatColor.AQUA + pdfFile.getName() +
+                ChatColor.GRAY + "]";
         String version = ChatColor.GRAY + " v" + pdfFile.getVersion();
         String name = pdfFile.getName();
 
@@ -53,12 +54,19 @@ public class EventSupport extends JavaPlugin {
      * Checks if this server is running an instance of Paper or not
      * @return True if server is running Paper
      */
-    public static boolean isRunningPaper() {
+    static boolean isRunningPaper() {
         try {
             Class.forName("co.aikar.timings.Timing");
             return true;
         } catch (final ClassNotFoundException e) {
             return false;
         }
+    }
+
+    public boolean hasWorld(String path, World world) {
+        if (config.getList(path) == null) {
+            return false;
+        }
+        return config.getList(path).contains(world.getName()) || config.getList(path).contains("all");
     }
 }
