@@ -26,7 +26,7 @@ public class ServerEvents implements Listener {
     public void onTabComplete(TabCompleteEvent e) {
         if (!config().getBoolean("Server Events.Tab Complete.Cancel")) return;
         if (!(e.getSender() instanceof Player)) return;
-        if (plugin.hasWorld("Server Events.Tab Complete.Worlds", e.getLocation().getWorld())) {
+        if (plugin.hasWorld("Server Events.Tab Complete.Worlds", ((Player) e.getSender()).getWorld())) {
             if(!e.getSender().hasPermission("eventhandler.bypass.tabcomplete")) {
                 e.setCancelled(true);
                 if(config().getBoolean("Server Events.Tab Complete.Message.Enabled")) {
