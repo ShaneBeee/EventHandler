@@ -27,12 +27,13 @@ public class PaperEvents implements Listener {
     @EventHandler
     public void onJump(PlayerJumpEvent e) {
         Player p = e.getPlayer();
-        if(config().getBoolean("Player Events.Jump.Cancel")) {
-            if(!p.hasPermission("eventhandler.bypass.jump")) {
+        if (!config().getBoolean("Player Events.Jump.Cancel")) return;
+        if (plugin.hasWorld("Player Events.Jump.Worlds", p.getWorld())) {
+            if (!p.hasPermission("eventhandler.bypass.jump")) {
                 e.setCancelled(true);
-                if(config().getBoolean("Player Events.Jump.Message.Enabled")) {
+                if (config().getBoolean("Player Events.Jump.Message.Enabled")) {
                     String msg = config().getString("Player Events.Jump.Message.Message");
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', msg != null ? msg : ""));
                 }
             }
         }
@@ -41,7 +42,8 @@ public class PaperEvents implements Listener {
     // Stops anvils from breaking
     @EventHandler
     public void onAnvilBreak(AnvilDamagedEvent e) {
-        if(config().getBoolean("Block Events.Anvil Break.Cancel")) {
+        if (!config().getBoolean("Block Events.Anvil Break.Cancel")) return;
+        if (plugin.hasWorld("Block Events.Anvil Break.Worlds", e.getView().getPlayer().getWorld())) {
             e.setCancelled(true);
         }
     }
@@ -49,7 +51,8 @@ public class PaperEvents implements Listener {
     // Stops turtles from laying eggs
     @EventHandler
     public void onTurtleLayEgg(TurtleLayEggEvent e) {
-        if(config().getBoolean("Entity Events.Turtle Lay Eggs.Cancel")) {
+        if (!config().getBoolean("Entity Events.Turtle Lay Eggs.Cancel")) return;
+        if (plugin.hasWorld("Entity Events.Turtle Lay Eggs.Worlds", e.getEntity().getWorld())) {
             e.setCancelled(true);
         }
     }
@@ -57,7 +60,8 @@ public class PaperEvents implements Listener {
     // Stops skeleton traps from spawning
     @EventHandler
     public void onSkeletonTrap(SkeletonHorseTrapEvent e) {
-        if(config().getBoolean("Entity Events.Skeleton Trap.Cancel")) {
+        if (!config().getBoolean("Entity Events.Skeleton Trap.Cancel")) return;
+        if (plugin.hasWorld("Entity Events.Skeleton Trap.Worlds", e.getEntity().getWorld())) {
             e.setCancelled(true);
         }
     }
@@ -65,7 +69,8 @@ public class PaperEvents implements Listener {
     // Stops witches from throwing potions
     @EventHandler
     public void onWitchThrowPotion(WitchThrowPotionEvent e) {
-        if(config().getBoolean("Entity Events.Witch Throw Potion.Cancel")) {
+        if (!config().getBoolean("Entity Events.Witch Throw Potion.Cancel")) return;
+        if (plugin.hasWorld("Entity Events.Witch Throw Potion.Worlds", e.getEntity().getWorld())) {
             e.setCancelled(true);
         }
     }
