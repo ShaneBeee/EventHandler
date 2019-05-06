@@ -30,20 +30,26 @@ public class EntityEvents implements Listener {
     // This cancels mobs from spawning from spawners
     @EventHandler
     public void onSpawnerSpawn(SpawnerSpawnEvent e) {
-        if (config().getBoolean("Entity Events.Spawner Spawn Mob.Cancel")) e.setCancelled(true);
+        if (!config().getBoolean("Entity Events.Spawner Spawn Mob.Cancel")) return;
+        if (plugin.hasWorld("Entity Events.Spawner Spawn Mob.Worlds", e.getLocation().getWorld())) {
+            e.setCancelled(true);
+        }
     }
 
     // This cancels lightning hitting pigs and turning them into pig zombies
     @EventHandler
     public void onPigZap(PigZapEvent e) {
-        if(config().getBoolean("Entity Events.Pig Zap.Cancel")) e.setCancelled(true);
+        if(!config().getBoolean("Entity Events.Pig Zap.Cancel")) return;
+        if (plugin.hasWorld("Entity Events.Pig Zap.Worlds", e.getEntity().getWorld())) e.setCancelled(true);
     }
 
     // Stops entities from trampling turtle eggs
     @EventHandler
     public void onTurtleEggTrample(EntityInteractEvent e) {
         if (e.getBlock().getType().equals(Material.TURTLE_EGG)) {
-            if (config().getBoolean("Entity Events.Trample Turtle Eggs.Cancel")) e.setCancelled(true);
+            if (!config().getBoolean("Entity Events.Trample Turtle Eggs.Cancel")) return;
+
+            if (plugin.hasWorld("Entity Events.Trample Turtle Eggs.Worlds", e.getEntity().getWorld())) e.setCancelled(true);
         }
     }
 
@@ -52,14 +58,16 @@ public class EntityEvents implements Listener {
     public void onVillagerBreak(EntityChangeBlockEvent e) {
         if (e.getEntityType() == EntityType.VILLAGER) {
             if (e.getBlock().getType() == Material.AIR && e.getBlock().getRelative(BlockFace.DOWN).getType() == Material.FARMLAND) {
-                if (config().getBoolean("Entity Events.Villager Planting Crops.Cancel")) e.setCancelled(true);
+                if (!config().getBoolean("Entity Events.Villager Planting Crops.Cancel")) return;
+                if (plugin.hasWorld("Entity Events.Villager Planting Crops.Worlds", e.getBlock().getWorld())) e.setCancelled(true);
             }
             switch (e.getBlock().getType()) {
                 case WHEAT:
                 case POTATOES:
                 case CARROTS:
                 case BEETROOTS:
-                    if (config().getBoolean("Entity Events.Villager Breaking Crops.Cancel")) e.setCancelled(true);
+                    if (!config().getBoolean("Entity Events.Villager Breaking Crops.Cancel")) return;
+                    if (plugin.hasWorld("Entity Events.Villager Breaking Crops.Worlds", e.getBlock().getWorld())) e.setCancelled(true);
             }
         }
     }
@@ -71,9 +79,11 @@ public class EntityEvents implements Listener {
         EntityType vehicle = e.getVehicle().getType();
         if(!(entity instanceof Player)) {
             if(vehicle == EntityType.BOAT) {
-                if (config().getBoolean("Entity Events.Enter Boat.Cancel")) e.setCancelled(true);
+                if (!config().getBoolean("Entity Events.Enter Boat.Cancel")) return;
+                if (plugin.hasWorld("Entity Events.Enter Boat.Worlds", entity.getWorld())) e.setCancelled(true);
             } else if(vehicle == EntityType.MINECART) {
-                if(config().getBoolean("Entity Events.Enter Minecart.Cancel")) e.setCancelled(true);
+                if (!config().getBoolean("Entity Events.Enter Minecart.Cancel")) return;
+                if (plugin.hasWorld("Entity Events.Enter Minecart.Worlds", entity.getWorld())) e.setCancelled(true);
             }
         }
     }
