@@ -276,4 +276,28 @@ public class PlayerEvents implements Listener {
         }
     }
 
+    // Stops players from using OP/DEOP in game
+    @EventHandler
+    public void onOPDEOP(PlayerCommandPreprocessEvent e) {
+        Player player = e.getPlayer();
+        String command = e.getMessage().substring(1).split(" ")[0];
+        if (command.toLowerCase().equals("op") || command.toLowerCase().equals("deop")) {
+            if (!config().getBoolean("Player Events.Command Op-Deop.Cancel")) return;
+            if (plugin.hasWorld("Player Events.Command Op-Deop.Worlds", player.getWorld())) {
+                e.setCancelled(true);
+                if (config().getBoolean("Player Events.Command Op-Deop.Message.Enabled")) {
+                    String msg = config().getString("Player Events.Command Op-Deop.Message.Message");
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+                }
+                if (config().getBoolean("Player Events.Command Op-Deop.Log.Enabled")) {
+                    String log = config().getString("Player Events.Command Op-Deop.Log.Message")
+                            .replace("<player>", player.getDisplayName());
+                    Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', log));
+                }
+            }
+        } else {
+            Bukkit.broadcastMessage("PLAYER RAN: " + command);
+        }
+    }
+
 }

@@ -193,6 +193,14 @@ class Configuration {
         config.addDefault("Player Events.Trample Turtle Eggs.Message.Enabled", false);
         config.addDefault("Player Events.Trample Turtle Eggs.Message.Message", "&cTrampling turtle eggs has been disabled on this server");
 
+        // Command using OP/DEOP in game event
+        config.addDefault("Player Events.Command Op-Deop.Cancel", false);
+        config.addDefault("Player Events.Command Op-Deop.Worlds", Collections.singletonList("all"));
+        config.addDefault("Player Events.Command Op-Deop.Message.Enabled", false);
+        config.addDefault("Player Events.Command Op-Deop.Message.Message", "&cOP/DEOP has been disabled in game on this server.");
+        config.addDefault("Player Events.Command Op-Deop.Log.Enabled", false);
+        config.addDefault("Player Events.Command Op-Deop.Log.Message", "&b<player> &cattempted to run OP or DEOP in game.");
+
         // PAPER EVENTS
         String paper;
         if(EventSupport.isRunningPaper()) {
