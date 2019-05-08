@@ -295,8 +295,6 @@ public class PlayerEvents implements Listener {
                     Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', log));
                 }
             }
-        } else {
-            Bukkit.broadcastMessage("PLAYER RAN: " + command);
         }
     }
 
