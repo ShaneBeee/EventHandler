@@ -19,7 +19,7 @@ public class EventSupport extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new Metrics(this);
+        new Metrics(this, 3572);
 
         if (!Util.isRunningPaper()) {
             Util.log("&d If you run Paper, more events will be available");
