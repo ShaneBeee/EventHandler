@@ -3,19 +3,22 @@ package tk.shanebee.eventSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
+import tk.shanebee.eventSupport.util.Util;
 
 import java.util.Collections;
 
 class Configuration {
 
+    private final EventSupport plugin;
+    private final FileConfiguration config;
 
-    /**
-     * Sets the defaults for the plugin's config file
-     * @param config The plugins config file
-     */
-    static void loadConfig(FileConfiguration config) {
+    public Configuration(EventSupport plugin) {
+        this.plugin = plugin;
+        this.config = plugin.getConfig();
+    }
 
-        PluginDescriptionFile pdfFile = EventSupport.getPlugin(EventSupport.class).getDescription();
+    void loadConfig() {
+        PluginDescriptionFile pdfFile = this.plugin.getDescription();
         String ver = pdfFile.getVersion();
 
         config.addDefault("Options.Prefix", "[EventHandler]");
@@ -78,6 +81,11 @@ class Configuration {
         config.addDefault("Server Events.Lightning Strike.Cancel", false);
         config.addDefault("Server Events.Lightning Strike.Worlds", Collections.singletonList("all"));
 
+        // Night Skip Event (only available on 1.15.2+)
+        if (Util.classExists("org.bukkit.event.world.TimeSkipEvent")) {
+            config.addDefault("Server Events.Night Skip.Cancel", false);
+            config.addDefault("Server Events.Night Skip.Worlds", Collections.singletonList("all"));
+        }
 
         // PLAYER EVENTS
         // Breed event
@@ -203,7 +211,7 @@ class Configuration {
 
         // PAPER EVENTS
         String paper;
-        if(EventSupport.isRunningPaper()) {
+        if(Util.isRunningPaper()) {
 
             // Jump event
             config.addDefault("Player Events.Jump.Cancel", false);
@@ -229,8 +237,7 @@ class Configuration {
             config.addDefault("Entity Events.Witch Throw Potion.Worlds", Collections.singletonList("all"));
 
             paper = "Running Paper: True";
-        }
-        else {
+        } else {
             paper = "Running Paper: False" +
                     "\nIf you run Paper, you will gain a few more events you can cancel" +
                     "\nIf you wish to consider running Paper, check out their website for more info" +
@@ -250,6 +257,8 @@ class Configuration {
                 "More info regarding these events can be found on the Spigot resource page:" + "\n" +
                 "https://www.spigotmc.org/resources/eventhandler.62329/" + "\n\n" +
                 "The permission nodes are just here for reference, changing them will have no affect");
+
+        plugin.saveConfig();
     }
 
 }

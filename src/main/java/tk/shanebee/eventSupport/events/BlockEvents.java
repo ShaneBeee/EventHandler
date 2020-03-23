@@ -11,20 +11,18 @@ import tk.shanebee.eventSupport.EventSupport;
 
 public class BlockEvents implements Listener {
 
-    private EventSupport plugin;
+    private final EventSupport plugin;
+    private final FileConfiguration config;
 
-    public BlockEvents(EventSupport instance) {
-        plugin = instance;
-    }
-
-    private FileConfiguration config() {
-        return plugin.getConfig();
+    public BlockEvents(EventSupport plugin) {
+        this.plugin = plugin;
+        this.config = plugin.getConfig();
     }
 
     // Blocks dispensers from dispensing items
     @EventHandler
-    public void onDispense(BlockDispenseEvent e) {
-        if(!config().getBoolean("Block Events.Dispense.Cancel")) return;
+    private void onDispense(BlockDispenseEvent e) {
+        if (!config.getBoolean("Block Events.Dispense.Cancel")) return;
         if (plugin.hasWorld("Block Events.Dispense.Worlds", e.getBlock().getWorld())) {
             e.setCancelled(true);
         }
@@ -32,8 +30,8 @@ public class BlockEvents implements Listener {
 
     // Stops blocks from forming
     @EventHandler
-    public void onForm(BlockFormEvent e) {
-        if(!config().getBoolean("Block Events.Block Form.Cancel")) return;
+    private void onForm(BlockFormEvent e) {
+        if (!config.getBoolean("Block Events.Block Form.Cancel")) return;
         if (plugin.hasWorld("Block Events.Block Form.Worlds", e.getBlock().getWorld())) {
             e.setCancelled(true);
         }
@@ -41,8 +39,8 @@ public class BlockEvents implements Listener {
 
     // Stops leaves from decaying
     @EventHandler
-    public void onLeafDecay(LeavesDecayEvent e) {
-        if(!config().getBoolean("Block Events.Leaf Decay.Cancel")) return;
+    private void onLeafDecay(LeavesDecayEvent e) {
+        if (!config.getBoolean("Block Events.Leaf Decay.Cancel")) return;
         if (plugin.hasWorld("Block Events.Leaf Decay.Worlds", e.getBlock().getWorld())) {
             e.setCancelled(true);
         }
@@ -50,8 +48,8 @@ public class BlockEvents implements Listener {
 
     // Stops sponges from absorbing
     @EventHandler
-    public void onSpongeAbsorb(SpongeAbsorbEvent e) {
-        if(!config().getBoolean("Block Events.Sponge Absorb.Cancel")) return;
+    private void onSpongeAbsorb(SpongeAbsorbEvent e) {
+        if (!config.getBoolean("Block Events.Sponge Absorb.Cancel")) return;
         if (plugin.hasWorld("Block Events.Sponge Absorb.Worlds", e.getBlock().getWorld())) {
             e.setCancelled(true);
         }

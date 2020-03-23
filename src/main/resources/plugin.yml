@@ -1,9 +1,9 @@
 main: tk.shanebee.eventSupport.EventSupport
 name: EventHandler
-version: 1.5.1
-api-version: 1.13
+version: '${project.version}'
+api-version: '1.13'
 author: ShaneBee
-website: https://ShaneBee.tk
+website: https://github.com/ShaneBeee/EventHandler
 description: Allowing server admins to cancel certain events
 
 commands:
